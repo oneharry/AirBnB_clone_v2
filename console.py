@@ -120,25 +120,29 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        arg_list = shlex.split(arg)
-        new_instance = eval(arg_list[0])()
-        for i in arg_list[1:]:
-            try:
-                key = i.split("=")[0]
-                value = (i.split("=")[1])
-                if hasattr(new_instance, key) is True:
-                    value = value.replace("_", " ")
-                    try:
-                        value = eval(value)
-                    except (Exception):
-                        pass
-                    setattr(new_instance, key, value)
+        try:
+            arg_list = shlex.split(arg)
+            new_instance = eval(arg_list[0])()
+            for i in arg_list[1:]:
+                try:
+                    key = i.split("=")[0]
+                    value = (i.split("=")[1])
+                    if hasattr(new_instance, key) is True:
+                        value = value.replace("_", " ")
+                        try:
+                            value = eval(value)
+                        except (Exception):
+                            pass
+                        setattr(new_instance, key, value)
 
             except (IndexError, ValueError, TypeError):
                 pass
 
-        new_instance.save()
-        print(new_instance.id)
+            new_instance.save()
+            print(new_instance.id)
+        except (Exception):
+            print("** class doesn't exist **")
+            return
 
     def help_create(self):
         """ Help information for the create method """
