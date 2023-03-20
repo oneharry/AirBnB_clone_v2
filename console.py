@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -113,18 +114,31 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """ Create an object of any class"""
-        if not args:
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+
+        arg_list = shlex.split(arg)
+        new_instance = eval(arg_list[0])()
+        for i in arg_list[1:]:
+            try:
+                key = i.split("=")[0]
+                value = (i.split("=")[1])
+                if hasattr(new_instance, key) is True:
+                    value = value.replace("_", " ")
+                    try:
+                        value = eval(value)
+                    except (Exception):
+                        pass
+                    setattr(new_instance, key, value)
+
+            except (IndexError, ValueError, TypeError):
+                pass
+
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -319,6 +333,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

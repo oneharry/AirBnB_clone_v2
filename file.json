@@ -1,0 +1,10 @@
+{
+    "User.f0287aa1-33d5-4039-b395-c4960cf9a685": {
+        "id": "f0287aa1-33d5-4039-b395-c4960cf9a685",
+        "created_at": "2023-03-20T21:40:38.963631",
+        "updated_at": "2023-03-20T21:40:38.963742",
+        "first_name": "Mike Smith",
+        "last_name": "house",
+        "__class__": "User"
+    }
+}
