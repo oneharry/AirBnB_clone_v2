@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             arg_list = shlex.split(arg)
             print(arg_list)
-            print(eval(arg_list[0])())
+            print(eval(arg_list[1]))
             new_instance = eval(arg_list[0])()
             print(new_instance)
             for i in arg_list[1:]:
