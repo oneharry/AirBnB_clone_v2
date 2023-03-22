@@ -4,7 +4,7 @@ import cmd
 import sys
 import shlex
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -131,16 +131,17 @@ class HBNBCommand(cmd.Cmd):
                         value = value.replace("_", " ")
                         try:
                             value = eval(value)
-                        except (Exception):
+                            print(value)
+                        except Exception:
                             pass
                         setattr(new_instance, key, value)
 
-            except (IndexError, ValueError, TypeError):
-                pass
+                except (IndexError, ValueError, TypeError):
+                    pass
 
             new_instance.save()
             print(new_instance.id)
-        except (Exception):
+        except Exception:
             print("** class doesn't exist **")
             return
 
