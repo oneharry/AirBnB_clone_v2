@@ -2,7 +2,6 @@
 """
 Module - DBStorage
 """
-import models
 from os import getenv
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -39,7 +38,7 @@ class DBStorage():
 
         db_dict = {}
         if cls is not None:
-            objects = self.__session.query(models.classes[cls]).all()
+            objects = self.__session.query(model.classes[cls]).all()
             for obj in objects:
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
                 db_dict[key] = obj
