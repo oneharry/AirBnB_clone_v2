@@ -124,7 +124,10 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             arg_list = shlex.split(arg)
+            print(arg_list)
+            print(eval(arg_list[0])())
             new_instance = eval(arg_list[0])()
+            print(new_instance)
             for i in arg_list[1:]:
                 try:
                     key = i.split("=")[0]
@@ -134,13 +137,17 @@ class HBNBCommand(cmd.Cmd):
                         try:
                             value = eval(value)
                         except Exception:
+                            print("1")
                             pass
                         setattr(new_instance, key, value)
                 except (IndexError, ValueError, TypeError):
+                    print("2")
                     pass
             new_instance.save()
+            print(new_instance)
             print(new_instance.id)
         except Exception:
+            print("3")
             print("** class doesn't exist **")
             return
 
@@ -225,7 +232,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             for k, v in storage.all(args).items():
-                    print_list.append(str(v))
+                print_list.append(str(v))
         else:
             for k, v in storage.all().items():
                 print_list.append(str(v))
