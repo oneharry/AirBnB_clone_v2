@@ -3,6 +3,8 @@
 import cmd
 import sys
 import shlex
+import json
+import models
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -131,14 +133,11 @@ class HBNBCommand(cmd.Cmd):
                         value = value.replace("_", " ")
                         try:
                             value = eval(value)
-                            print(value)
                         except Exception:
                             pass
                         setattr(new_instance, key, value)
-
                 except (IndexError, ValueError, TypeError):
                     pass
-
             new_instance.save()
             print(new_instance.id)
         except Exception:
@@ -225,11 +224,10 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
+            for k, v in storage.all(args).items():
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
