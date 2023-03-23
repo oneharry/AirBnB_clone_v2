@@ -1,0 +1,30 @@
+{
+    "User.eec57061-e072-4db7-b244-7cf3cbe2646d": {
+        "id": "eec57061-e072-4db7-b244-7cf3cbe2646d",
+        "created_at": "2023-03-21T21:07:12.876634",
+        "updated_at": "2023-03-21T21:07:12.876643",
+        "name": "ALX",
+        "__class__": "User"
+    },
+    "User.34e1c0fc-7339-4bb0-a235-c833facc780b": {
+        "id": "34e1c0fc-7339-4bb0-a235-c833facc780b",
+        "created_at": "2023-03-21T21:07:18.903305",
+        "updated_at": "2023-03-21T21:07:18.903312",
+        "name": "ALX",
+        "__class__": "User"
+    },
+    "User.dafabb8c-2b06-44fc-8195-3a9d67878c18": {
+        "id": "dafabb8c-2b06-44fc-8195-3a9d67878c18",
+        "created_at": "2023-03-22T19:18:12.966867",
+        "updated_at": "2023-03-22T19:18:12.966878",
+        "name": "ALX",
+        "__class__": "User"
+    },
+    "State.94e31b78-ff6c-4775-aa30-b6f78c641a50": {
+        "id": "94e31b78-ff6c-4775-aa30-b6f78c641a50",
+        "created_at": "2023-03-22T19:18:12.975354",
+        "updated_at": "2023-03-22T19:18:12.975380",
+        "name": "Nevada",
+        "__class__": "State"
+    }
+}
