@@ -66,4 +66,5 @@ def do_deploy(archive_path):
 
 def deploy():
     """ Deploy to web servers using the other commands"""
-    archive_path = fab -f do_pack()
+    archive_path = fab -f 1-pack_web_static.py do_pack()
+

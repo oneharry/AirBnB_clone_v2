@@ -52,7 +52,7 @@ def do_deploy(archive_path):
     if result.failed:
         return False
     result = run("rm -rf /data/web_static/releases/{}/web_static/"
-                 .format(file_name)
+                 .format(file_name))
     if result.failed:
         return False
     result = run("rm -rf /data/web_static/current")
@@ -61,5 +61,4 @@ def do_deploy(archive_path):
     result = run("ln -s {} /data/web_static/current".format(arch_dir))
     if result.failed:
         return False
-
     return True
