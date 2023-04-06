@@ -4,10 +4,12 @@ Fabric script for sys admin automation
 """
 
 
-from fabric.api import sudo, run, local
+from fabric.api import sudo, run, local, put, env
 from datetime import datetime
 from os.path import exists
 
+env.hosts = ["34.224.94.161", "35.153.232.246"]
+env.user = "ubuntu"
 
 def do_pack():
     """ Return the archive path of generated .tgz archive"""
@@ -24,8 +26,6 @@ def do_pack():
 def do_deploy(archive_path):
     """ Fabric script (based on the file 1-pack_web_static.py)
     that distributes an archive to your web servers"""
-    env.hosts = ["34.224.94.161", "35.153.232.246"]
-    env.user = "ubuntu"
 
     if not exists(archive_path):
         return False
