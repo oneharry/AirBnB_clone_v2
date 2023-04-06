@@ -63,3 +63,7 @@ def do_deploy(archive_path):
         return False
 
     return True
+
+def deploy():
+    """ Deploy to web servers using the other commands"""
+    archive_path = fab -f do_pack()
