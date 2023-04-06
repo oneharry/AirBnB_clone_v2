@@ -2,27 +2,11 @@
 """
 Fabric script for sys admin automation
 """
-
-
 from fabric.api import sudo, run, local, put, env
 from datetime import datetime
 from os.path import exists
 from sys import argv
-
 env.hosts = ["34.224.94.161", "35.153.232.246"]
-env.user = "ubuntu"
-
-
-def do_pack():
-    """ Return the archive path of generated .tgz archive"""
-    local("mkdir -p versions")
-    time = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-    print(time)
-    path = "versions/web_static_{}.tgz".format(time)
-    arch = local("tar -cvzf {} web_static".format(path))
-    if arch.succeeded:
-        return arch
-    return None
 
 
 def do_deploy(archive_path):
