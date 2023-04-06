@@ -71,7 +71,6 @@ def do_deploy(archive_path):
 def deploy():
     """ Deploy to web servers using the other commands"""
     archive_path = do_pack()
-    if archive_path is None:
-        return False
-    result = do_deploy(archive_path)
-    return result
+    if archive_path:
+        return do_deploy(archive_path)
+    return False
