@@ -2,11 +2,15 @@
 """
 Fabric script for sys admin automation
 """
+
+
 from fabric.api import sudo, run, local, put, env
 from datetime import datetime
 from os.path import exists
 from sys import argv
+
 env.hosts = ["34.224.94.161", "35.153.232.246"]
+env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
@@ -22,6 +26,9 @@ def do_deploy(archive_path):
         return False
     arch_dir = "/data/web_static/releases/{}/".format(file_name)
 
+    result = run("rm -rf {}".format(arch_dir))
+    if result.failed:
+        return False
     result = run("mkdir -p {}".format(arch_dir))
     if result.failed:
         return False
@@ -45,4 +52,5 @@ def do_deploy(archive_path):
     result = run("ln -s {} /data/web_static/current".format(arch_dir))
     if result.failed:
         return False
+
     return True
