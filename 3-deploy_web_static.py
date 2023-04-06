@@ -51,7 +51,7 @@ def do_deploy(archive_path):
     if result.failed:
         return False
     result = run("mv /data/web_static/releases/{}/web_static/* {}"
-                 .format(file_name), arch_dir)
+                 .format(file_name, arch_dir))
     if result.failed:
         return False
     result = run("rm -rf /data/web_static/releases/{}/web_static/"
