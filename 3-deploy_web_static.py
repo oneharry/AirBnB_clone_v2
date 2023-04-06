@@ -38,6 +38,9 @@ def do_deploy(archive_path):
         return False
     arch_dir = "/data/web_static/releases/{}/".format(file_name)
 
+    result = run("rm -rf {}".format(arch_dir))
+    if result.failed:
+        return False
     result = run("mkdir -p {}".format(arch_dir))
     if result.failed:
         return False
@@ -66,8 +69,8 @@ def do_deploy(archive_path):
 
 def deploy():
     """ Deploy to web servers using the other commands"""
-    archive_path = fab -f 1-pack_web_static.py do_pack
+    archive_path = do_pack()
     if archive_path is None:
         return False
-    result = fab -f 2-do_deploy_web_static.py do_deploy:archive_path
-
+    result = do_deploy(archive_path)
+    return result
