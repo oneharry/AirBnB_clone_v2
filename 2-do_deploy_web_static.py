@@ -30,16 +30,31 @@ def do_deploy(archive_path):
 
     if not exists(archive_path):
         return False
-    try:
-        file_name = archive_path.split("/")[-1].split(".")[0]
-        path = "/tmp/{}".format(filename)
-        put(archive_path, path)
-        arch_dir = "/data/web_static/releases/{}".format(file_name)
-        run("mkdir -p {}".format(new_dir))
-        run("tar -zxf {} -C {}".format(path, arch_dir))
-        run("rm -rf {}".format(path))
-        run("rm -rf /data/web_static/current")
-        run("ln -s {} /data/web_static/current".format(arch_dir))
-        return True
-    except Exception:
+    file_name = archive_path.split("/")[-1].split(".")[0]
+    path = "/tmp/{}".format(archive_path.split("/")[-1])
+    result = put(archive_path, path)
+    if result.failed:
         return False
+    arch_dir = "/data/web_static/releases/{}".format(file_name)
+
+    result = run("mkdir -p {}".format(new_dir))
+    if result.failed:
+        return False
+    result = run("tar -zxf {} -C {}".format(path, arch_dir))
+    if result.failed:
+        return False
+    result = run("rm -rf {}".format(path))
+    if result.failed:
+        return False
+    result = run("rm -rf /data/web_static/releases/{}/web_static/*"
+                 .format(file_name), arch_dir)
+    if result.failed:
+        return False
+    result = run("rm -rf /data/web_static/current")
+    if result.failed:
+        return False
+    result = run("ln -s {} /data/web_static/current".format(arch_dir))
+    if result.failed:
+        return False
+
+    return True
