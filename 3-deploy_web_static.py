@@ -55,7 +55,7 @@ def do_deploy(archive_path):
     if result.failed:
         return False
     result = run("rm -rf /data/web_static/releases/{}/web_static/"
-                 .format(file_name)
+                 .format(file_name))
     if result.failed:
         return False
     result = run("rm -rf /data/web_static/current")
@@ -66,6 +66,7 @@ def do_deploy(archive_path):
         return False
 
     return True
+
 
 def deploy():
     """ Deploy to web servers using the other commands"""
