@@ -14,8 +14,10 @@ env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
-    """ Fabric script (based on the file 1-pack_web_static.py)
-    that distributes an archive to your web servers"""
+    """
+    Fabric script (based on the file 1-pack_web_static.py)
+    that distributes an archive to your web servers
+    """
 
     if not exists(archive_path):
         return False
@@ -26,30 +28,30 @@ def do_deploy(archive_path):
         return False
     arch_dir = "/data/web_static/releases/{}/".format(file_name)
 
-    result = run("rm -rf {}".format(arch_dir))
+    result = sudo("rm -rf {}".format(arch_dir))
     if result.failed:
         return False
-    result = run("mkdir -p {}".format(arch_dir))
+    result = sudo("mkdir -p {}".format(arch_dir))
     if result.failed:
         return False
-    result = run("tar -xzf {} -C {}".format(path, arch_dir))
+    result = sudo("tar -xzf {} -C {}".format(path, arch_dir))
     if result.failed:
         return False
-    result = run("rm -rf {}".format(path))
+    result = sudo("rm -rf {}".format(path))
     if result.failed:
         return False
-    result = run("mv /data/web_static/releases/{}/web_static/* {}"
-                 .format(file_name), arch_dir)
+    result = sudo("mv /data/web_static/releases/{}/web_static/* {}"
+                 .format(file_name, arch_dir))
     if result.failed:
         return False
-    result = run("rm -rf /data/web_static/releases/{}/web_static/"
+    result = sudo("rm -rf /data/web_static/releases/{}/web_static/"
                  .format(file_name))
     if result.failed:
         return False
-    result = run("rm -rf /data/web_static/current")
+    result = sudo("rm -rf /data/web_static/current")
     if result.failed:
         return False
-    result = run("ln -s {} /data/web_static/current".format(arch_dir))
+    result = sudo("ln -s {} /data/web_static/current".format(arch_dir))
     if result.failed:
         return False
 
