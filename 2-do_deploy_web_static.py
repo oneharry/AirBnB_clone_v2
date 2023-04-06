@@ -11,6 +11,7 @@ from os.path import exists
 env.hosts = ["34.224.94.161", "35.153.232.246"]
 env.user = "ubuntu"
 
+
 def do_pack():
     """ Return the archive path of generated .tgz archive"""
     local("mkdir -p versions")
