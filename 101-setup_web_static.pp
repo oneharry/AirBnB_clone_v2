@@ -26,14 +26,16 @@ file { '/data/web_static/releases/test/index.html':
     recurse => true,
 }
 
-exec { 'symbolic link':
-    command  => 'sudo ln -sf /data/web_static/releases/test/ /data/web_static/current',
-    provider => shell,
+file { '/data/web_static/current':
+    ensure => 'link',
+    owner  => 'ubuntu',
+    group  => 'ubuntu',
+    target => '/data/web_static/releases/test'
 }
 
 exec { 'haprox.cfg':
-    command  => 'sudo sed -i "60 c\\n\tlocation /hbnb_static" 
-    "{\n\t\talias /data/web_static/curr    ent/;\n\t}" /etc/nginx/sites-available/default',
+    command  => 'sudo sed -i "60 c\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/curr    ent/;\n\t}"
+	    /etc/nginx/sites-available/default',
     provider => shell,
 }
 
