@@ -70,7 +70,7 @@ def do_deploy(archive_path):
 
 def deploy():
     """ Deploy to web servers using the other commands"""
-    archive_path = do_pack()
-    if archive_path:
-        do_deploy(archive_path)
+    arch_path = do_pack()
+    if arch_path:
+        return do_deploy(arch_path)
     return False
