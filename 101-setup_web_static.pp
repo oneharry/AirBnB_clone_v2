@@ -32,8 +32,6 @@ package { 'nginx':
     provider => 'apt',
 }
 
-
-
 exec { ' sudo mkdir -p /data/web_static/releases/test/':
     provider => 'shell',
 }
@@ -58,6 +56,10 @@ file { '/data/web_static/current':
 file { '/index.html':
     ensure  => 'present',
     content => 'Hello World!',
+}
+
+exec { 'sudo chmod -R ubuntu:ubuntu /data/':
+    provider => 'shell',
 }
 
 exec { 'sudo cp /index.html /var/www/html/index.html':
