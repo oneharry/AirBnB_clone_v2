@@ -27,7 +27,8 @@ class DBStorage():
         env = getenv("HBNB_ENV", "none")
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, pwd, host, db), pool_pre_ping=True)
+                                      .format(user, pwd, host, db),
+                                      pool_pre_ping=True)
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -48,8 +49,8 @@ class DBStorage():
                 if k != "BaseModel":
                     objects = self.__session.query(v).all()
                     for obj in objects:
-                         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                         db_dict[key] = obj
+                        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                        db_dict[key] = obj
             return db_dict
 
     def new(self, obj):
@@ -72,7 +73,12 @@ class DBStorage():
             self.__session.delete(obj)
 
     def reload(self):
+        """ Reload """
         self.__session = Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
         self.__session = Session()
 
+    def close(self):
+        """ Close a session """
+        self.__session.remove()
