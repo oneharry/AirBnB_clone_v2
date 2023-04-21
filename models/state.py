@@ -6,10 +6,11 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import models
 
+
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
-    
+
     if getenv("HBNB_TYPE_STORAGE") == "db":
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state",
@@ -29,5 +30,3 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     cities_list.append(city)
             return cities_list
-
-    
