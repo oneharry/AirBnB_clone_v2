@@ -4,51 +4,21 @@
 """
 
 from flask import Flask, render_template
-
+from models import storage
+from models.state import State
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def hello_hbnb():
-    """ Function attached to root of url, return Hello HBNB!"""
-    return "Hello HBNB!"
+@app.teardown_appcontext
+def teardown(exception):
+    """ Remove the current sqlalchemy session"""
+    storage.close()
 
 
-@app.route('/hbnb', strict_slashes=False)
-def hbnb():
-    """ FUnction returns text hbnb"""
-    return "HBNB"
-
-
-@app.route('/c/<text>', strict_slashes=False)
-def C(text):
-    """ Returns value of text variable"""
-    return "C %s" % text.replace('_', ' ')
-
-
-@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def python(text):
-    """ Returns text when associated route is visited"""
-    return "Python %s" % text.replace('_', ' ')
-
-
-@app.route('/number/<int:n>', strict_slashes=False)
-def number(n):
-    """ Returns a text only if n variable is an int"""
-    return "%s is a number" % n
-
-
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def number_template(n):
-    """ Returns a rendered template"""
-    return render_template('5-number.html', n=n)
-
-
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def number_odd_or_even(n):
-    """ Returns number and render if odd or even"""
-    return render_template('6-number_odd_or_even.html', n=n)
+@app.route('/states_list', strict_slashes=False)
+def states():
+    """ Render list of states"""
+    return render_template('7-states_list.html', states=storage.all(State))
 
 
 if __name__ == '__main__':
