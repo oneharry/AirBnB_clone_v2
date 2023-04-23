@@ -19,7 +19,7 @@ def teardown(exception):
 def states():
     """ Render list of states"""
     state = storage.all(State)
-    return render_template('7-states_list.html', states=states)
+    return render_template('7-states_list.html')
 
 
 if __name__ == '__main__':
