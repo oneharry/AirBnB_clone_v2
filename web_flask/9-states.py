@@ -18,13 +18,17 @@ def teardown(err):
 def states():
     """ Render list of all the states """
     states = storage.all("State")
-    return render_template('7-states_list.html', states=states)
+    return render_template('9-states.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
 def state_id(id):
     """ Render a state based on the id """
-
+    states = storage.all("State").values()
+    for state in states:
+        if state.id == id:
+            return render_template('9-states.html', state=state)
+    return render_template('9-states.html', state=None)
 
 
 if __name__ == '__main__':
